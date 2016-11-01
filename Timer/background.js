@@ -24,7 +24,7 @@
       // Add a corresponding dummy value to the timers array
       timers.push(0);
     }
-    console.log(domain);
+    //console.log(domain);
   }
 
   function getDomainIndex(domain) {
@@ -38,11 +38,12 @@
   }
 
   function formatTime(millisecs) {
+    // Javascript is weird.
     var second = Math.floor((millisecs / 1000) % 60);
     var minute = Math.floor((millisecs / (1000 * 60)) % 60);
     var hour = Math.floor((millisecs / (1000 * 60 * 60)) % 24);
 
-    var time = hour.toString() + " : " + minute.toString() + " : " + second.toString();
+    var time = hour.toString() + ": " + minute.toString() + ": " + second.toString();
     return time;
   }
 
@@ -53,7 +54,7 @@
 
   // This will execute when the extension is installed
   chrome.runtime.onInstalled.addListener(function(info){
-    console.log("background.js chrome.runtime.onInstalled.addListener");
+    //console.log("background.js chrome.runtime.onInstalled.addListener");
     timedText();
     // Measure the elasped time
     startTime = new Date();
@@ -62,7 +63,7 @@
         var url = new URL(tabs[0].url);
         currDomain = url.hostname;
         logSites(currDomain);
-        console.log("Starting domain: " + currDomain);
+        //console.log("Starting domain: " + currDomain);
     });
   })
 
@@ -80,7 +81,7 @@
         // domain, and push it onto the appropriate array
         endTime = new Date();
         var index = getDomainIndex(currDomain);
-        timers[index] = endTime - startTime;
+        timers[index] += endTime - startTime;
         // Now handle the newly visited domain
         logSites(domain);
         currDomain = domain;
@@ -104,12 +105,12 @@
         if (currDomain != domain) {
           endTime = new Date();
           var index = getDomainIndex(domain);
-          timers[index] = endTime - startTime;
+          timers[index] += endTime - startTime;
           logSites(domain);
           currDomain = domain;
           startTime = new Date();
         }
-        console.log("loaded: " + domain);
+        //console.log("loaded: " + domain);
       })
     }
   })
@@ -163,7 +164,7 @@
   function myTimeout3() {
     console.log("20 seconds");
     for (var i = 0; i < sites.length; i++) {
-      console.log(sites[i] + " : " + formatTime(timers[i]));
+      console.log(sites[i] + " -> " + formatTime(timers[i]));
     }
   }
 }
