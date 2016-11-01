@@ -35,7 +35,7 @@ window.onload = function() {
   function addTimes() {
     for (var i = 0; i < bgPage.sites.length; i++) {
       var node = document.createElement("LI");
-      var textNode = document.createTextNode(bgPage.sites[i]
+      var textNode = document.createTextNode(bgPage.sites[i] + "  "
                                              + bgPage.formatTime(bgPage.timers[i]));
       node.appendChild(textNode);
       document.getElementById("list").appendChild(node);
