@@ -41,6 +41,8 @@ window.onload = function() {
       document.getElementById("list").appendChild(node);
     }
   }
+  //bgPage.chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab));
   loopy();
   addTimes();
+  bgPage.realTimeUpdate();
 }
