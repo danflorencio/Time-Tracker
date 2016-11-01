@@ -44,7 +44,7 @@
     var minute = Math.floor((millisecs / (1000 * 60)) % 60);
     var hour = Math.floor((millisecs / (1000 * 60 * 60)) % 24);
 
-    var time = hour.toString() + ": " + minute.toString() + ": " + second.toString();
+    var time = hour.toString() + "h: " + minute.toString() + "m: " + second.toString() + "s";
     return time;
   }
 
