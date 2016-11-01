@@ -4,6 +4,7 @@
   var timers = [];  // The array of the actual times corresponding to the sites
   var startTime;    // To measure elapsed time -> endTime - startTime
   var endTime;
+  var realTime;     // To perform an update when popup is clicked on
 
   function logSites(domain) {
     var visited = false;
@@ -45,6 +46,13 @@
 
     var time = hour.toString() + ": " + minute.toString() + ": " + second.toString();
     return time;
+  }
+
+  function realTimeUpdate() {
+    realTime = new Date();
+    var index = getDomainIndex(currDomain);
+    timers[index] += realTime - startTime;
+    startTime = new Date();
   }
 
   // Never fired, only starts when chrome starts, not when extension starts
@@ -110,7 +118,6 @@
           currDomain = domain;
           startTime = new Date();
         }
-        //console.log("loaded: " + domain);
       })
     }
   })
