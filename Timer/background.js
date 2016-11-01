@@ -5,10 +5,13 @@
   })
 
   // Keep a list of visited websites and the timers that go with them
+  // Another possible implementation, hash table?
+  var currDomain;
   var sites = [];
   var timers = [];
   function logSites(domain) {
     var visited = false;
+    // Easier way to do this, indexOf()
     for (var i = 0; i < sites.length; i++) {
       if (sites[i] == domain) {
         visited = true;
@@ -48,6 +51,19 @@
     });
   });
 
+  // When you're loading up a page, wait for it to complete and
+  // then start the timer for it.
+  chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    if (changeInfo.status == 'complete') {
+      chrome.tabs.getSelected(null, function (tab1) {
+        var url = new URL(tab.url);
+        var domain = url.hostname;
+
+        console.log(domain);
+      })
+    }
+  })
+
 
   // Code begins for the stopWatch
   var clear;
@@ -67,7 +83,6 @@
   var secs;
   var mins;
   var getHours;
-
   var totalTime = document.getElementById('status');
 
   function startWatch() {
@@ -93,21 +108,4 @@
     // Keep the stopwatch alive
     clearTime = setTimeout(startWatch, 1000);
   }
-
-  // Create a function to start the stopWatch
-  //function startTime() {
-    // Check if seconds, minutes and hours are equal to 0 and start
-    /*if (seconds === 0 && minutes === 0 && hours === 0) {
-      var fullTime = document.getElementById("fullTime");
-      fullTime.style.display = "none";
-      this.style.display = "none";
-      startWatch();
-    }*/
-  //  startWatch();
-  //  console.log("startWatch()");
-  //}
-
-  /*window.onload = function() {
-    startWatch();
-  }*/
 }

@@ -22,13 +22,6 @@ chrome.runtime.onStartup.addListener(function(details){
 
 window.onload = function() {
   var bgPage = chrome.extension.getBackgroundPage();
-  /*function myTimer() {
-    var d = new Date();
-    document.getElementById('status').innerHTML = d.toLocaleTimeString();
-  }
-  myTimer();*/
-  //bgPage.timedText();
-  //bgPage.startWatch();
   console.log("bgPage.startTime()");
   if (bgPage.count == 0) {
     bgPage.startWatch();
