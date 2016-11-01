@@ -37,8 +37,13 @@
     return 0;
   }
 
-  function formatTime(milliseconds) {
-    //var
+  function formatTime(millisecs) {
+    var second = Math.floor((millisecs / 1000) % 60);
+    var minute = Math.floor((millisecs / (1000 * 60)) % 60);
+    var hour = Math.floor((millisecs / (1000 * 60 * 60)) % 24);
+
+    var time = hour.toString() + " : " + minute.toString() + " : " + second.toString();
+    return time;
   }
 
   // Never fired, only starts when chrome starts, not when extension starts
@@ -158,7 +163,7 @@
   function myTimeout3() {
     console.log("20 seconds");
     for (var i = 0; i < sites.length; i++) {
-      console.log(sites[i] + " : " + timers[i]);
+      console.log(sites[i] + " : " + formatTime(timers[i]));
     }
   }
 }
