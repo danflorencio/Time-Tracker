@@ -20,13 +20,13 @@ window.onload = function() {
     bgPage.count++;
   }
 
-  // loopy() exists to refresh the global clock when the popup is activated, if
+  // refresh() exists to refresh the global clock when the popup is activated, if
   // we didn't update the clock every second, the only time the global clock
   // would be accurate is right at the instant the popup is clicked
   var resetMe;
   function refresh() {
     document.getElementById('status').innerHTML = chrome.extension.getBackgroundPage().totalTime;
-    resetMe = setTimeout(loopy, 1000);
+    resetMe = setTimeout(refresh, 1000);
   }
 
   // addTimes() will add the domains and the times a user has spent visiting
