@@ -32,7 +32,7 @@
       // Add a domain to the list of visited sites
       sites.push(domain);
       // Add a corresponding dummy value to the timers array
-      timers.push(1 - 0);
+      timers.push(0);
     }
   }
 
@@ -61,6 +61,16 @@
     return time;
   }
 
+  // errorCheck exists to get rid of a bug encountered at start time. Not the
+  // most elegant way around it, but it works.
+  function errorCheck(domain) {
+    if (isNaN(timers[getDomainIndex(domain)])) {
+      timers[getDomainIndex(domain)] = 0;
+      return true;
+    }
+    return false;
+  }
+
   // realTimeUpdate is used when first starting the extension. Check if there is
   // a corresponding value in the timers array with the current domain, if there
   // is, increment the value at the corresponding index in the timers array.
@@ -71,21 +81,18 @@
 
     console.log(getDomainIndex(currDomain));
     console.log(timers[getDomainIndex(currDomain)]);
-    if (timers[getDomainIndex(currDomain)] == null) {
-      console.log("Error: no corresponding value in timers array");
-      // There is no corresponding value in the timers array, start off
-      // with 0 milliseconds
-      timers[getDomainIndex(currDomain)] = 0;
+    /*if errorCheck(currDomain) {
       startTime = new Date();
       return;
-    }
+    }*/
+    errorCheck(currDomain);
 
     timers[getDomainIndex(currDomain)] += realTime - startTime;
     startTime = new Date();
   }
 
   // This function will execute when the extension is installed
-  chrome.runtime.onInstalled.addListener(function(info){
+  /*chrome.runtime.onInstalled.addListener(function(info){
     //console.log("background.js chrome.runtime.onInstalled.addListener");
     debug();
     // Measure the elasped time
@@ -97,7 +104,7 @@
         logSites(currDomain);
         //console.log("Starting domain: " + currDomain);
     });
-  })
+  })*/
 
   // This function will execute when tabs are changed.
   chrome.tabs.onActivated.addListener(function(info) {
