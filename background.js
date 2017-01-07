@@ -113,6 +113,8 @@
     chrome.tabs.get(info.tabId, function (tab) {
       var url = new URL(tab.url);
       var domain = url.hostname;
+      errorCheck(domain);
+      errorCheck(currDomain);
       // Check if we are moving to a different domain and we are visitng
       // a domain that we have not previously visited
       if (currDomain != domain) {
@@ -143,6 +145,8 @@
       chrome.tabs.getSelected(null, function (tab1) {
         var url = new URL(tab.url);
         var domain = url.hostname;
+        errorCheck(domain);
+        errorCheck(currDomain);
         // Check if different domain and if it is not completely new to us
         if (currDomain != domain) {
           endTime = new Date();
